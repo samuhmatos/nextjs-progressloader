@@ -145,3 +145,9 @@ return (
   </>
 );
 ```
+
+### Configuration
+
+```jsx
+<ContainerLink link:string />
+```
