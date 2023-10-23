@@ -1,37 +1,25 @@
-'use client';
-import NextLink from 'next/link';
-import { useEffect, useRef } from 'react';
 import React from 'react';
-import { EventEmitter } from 'events';
+import { Link, LinkProps } from './Link';
+import { existEvent } from '../services/eventsServices';
 
-const eventEmitter = new EventEmitter();
-
-export function handleClickLink(link: string) {
-  eventEmitter.emit(`on-click-link-${link}`);
+export interface ContainerLinkProps {
+  links: LinkProps[];
 }
 
-interface ContainerLinkProps {
-  children?: React.ReactNode;
-  link: string;
-}
-
-export function ContainerLink({ children, link }: ContainerLinkProps) {
-  const linkRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    eventEmitter.on(`on-click-link-${link}`, () => {
-      linkRef.current?.click();
-    });
-
-    return () => {
-      eventEmitter.removeAllListeners(`on-click-link-${link}`);
-    };
-  }, []);
-
+export function ContainerLink({ links }: ContainerLinkProps) {
   return (
     <div>
-      {children}
-      <NextLink href={link} ref={linkRef} style={{ display: 'none' }} />
+      {links.map((link) => {
+        if (existEvent(links, link)) {
+          throw new Error(
+            `The href '${link.href}' or nickname '${link.nickname}' already exist in the list!`
+          );
+        }
+
+        return (
+          <Link href={link.href} nickname={link.nickname} key={link.href} />
+        );
+      })}
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import * as NProgress from 'nprogress';
-import { handleClick } from './../progressService';
+import { handleClick } from '../services/progressService';
 
 export type ProgressLoaderProps = {
   /**
