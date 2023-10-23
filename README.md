@@ -1,9 +1,9 @@
 # Next Js Progress Loader
 
 - A next Js Loading Bar component made using Nprogress, works with Next.js 13.
-- Additional feature: call function to navigate between routes instead useRouter() [beta]
+- Advanced feature: Navigate between routes with loading animation instead using useRouter()
 
-Important context: Latter the Next.Js 13 update, router events has ben depreciated and still there's no 'next native resource' to manipulate router events as before. But, i found 2 ways to make the UX better.
+Important context: Latter the Next.Js 13 update, router events has ben depreciated and still there's no 'next native resource' to manipulate router events as before. But this lib was build to solve this problem and bring a new way to make the UX better!
 
 ## Install
 
@@ -47,24 +47,6 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### Usage with `pages/_app.js` for `pages` folder structure
-
-For rendering add `<ProgressLoader />` to your `return()` in `MyApp()`:
-
-```js
-'use client';
-import { ProgressLoader } from 'nextjs-progressloader';
-
-export default function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <ProgressLoader />
-      <Component {...pageProps} />;
-    </>
-  );
-}
-```
-
 ### Default Configuration
 
 If no props are passed to `<ProgressLoader />`, below is the default configuration applied.
@@ -102,48 +84,50 @@ If no props are passed to `<ProgressLoader />`, below is the default configurati
 
 ## Advanced Usage
 
-If you would like to render some route with the Load Animation, use `<ContainerLink />` component and `handleClickLink()` function to it:
+If you would like to render some route with the Load Animation, use `<ContainerLink />` component and `changeRoute()` function to do it:
 
-When render `<ContainerLink />` you are required to pass a link prop which is responsible to create a event based on the current prop.
-And when call `handleClickLink()`, a event is emitted event based on the param.
+When render `<ContainerLink />` you are required to pass a `links` prop which is responsible to create all the needed events to work.
 
-- Important and required: to work, the link prop and the function parameter must be equals.
+And when using `changeRoute()` a event will be emitted based on the function's param.
 
-### 1° usage
+- **Important and required**: To this feature work correctly, the `links` prop and the function's parameter must be equals.
+- You can render the component as many times as you want and anywhere you want, being inside the `<body></body>`
+- Using the `<ContainerLink />` next will identify the routes and will pre-render: verify the doc https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching
 
-You can use the container and pass a children component inside.
+Once the links are defined, you can call the route wherever and whenever you want! You may call using the nickname or href
 
-```jsx
-import { handleClickLink, ContainerLink } from 'nextjs-progressloader';
-
-<ContainerLink link="/login">
-  <button className="bg-red-500" onClick={() => handleClickLink('/login')}>
-    Login
-  </button>
-</ContainerLink>;
-```
-
-### 2° usage
+### Example usage
 
 ```jsx
-import { handleClickLink, ContainerLink } from 'nextjs-progressloader';
+import { changeRoute, ContainerLink, ContainerLinkProps } from 'nextjs-progressloader';
 
-function login() {
-  // your needed validation here
+const links: ContainerLinkProps["links"] = [
+  {
+    href: "/",
+    nickname: "home",
+  },
+  {
+    href: "/posts",
+    nickname: "posts"
+  },
+  {
+    href: "/dashboard",
+    nickname: "dashboard"
+  },
+];
 
-  //navigating
-  handleClickLink('/login');
-}
+<ContainerLink links={links} />;
 
-return (
-  <>
-    <button className="bg-red-500" onClick={login}>
-      Login
-    </button>
-    //use wherever you want
-    <ContainerLink link="/login" />
-  </>
-);
+<button className="bg-red-500" onClick={()=> changeRoute("dashboard")}>
+  Open dashboard route by nickname
+</button>
+<button className="bg-red-500" onClick={()=> changeRoute("/dashboard")}>
+  Open dashboard route by href
+</button>
 ```
 
 `link`: string
+`nickname`: string
+
+- `link`: href of the route
+- `nickname`: short name, nickname, route name... Whatever you want to set to open the route easily

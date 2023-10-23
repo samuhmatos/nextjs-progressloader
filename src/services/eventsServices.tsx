@@ -4,7 +4,7 @@ export const eventEmitter = new EventEmitter();
 
 export function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
   var existLink = links.filter(
-    (link) => link.href === href || link.nickname === nickname
+    (link) => link.href === href || (nickname && link.nickname === nickname)
   );
 
   if (existLink.length > 1) {
@@ -14,7 +14,7 @@ export function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
   return false;
 }
 
-export function handleClickLink(name: string): void {
+export function changeRoute(name: string): void {
   eventEmitter.emit(`route-${name}`);
 }
 
@@ -40,3 +40,5 @@ export function removeEvent({ href, nickname }: LinkProps): void {
     eventEmitter.removeAllListeners(`route-${nickname}`);
   }
 }
+
+// TODO: CHANGE ROUTE VALIDATE IF EXIST ROUTE
