@@ -15,13 +15,14 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "deploy": "npm version patch && npm publish"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "next": ">= 6.0.0",
+    "react": ">= 16.0.0",
+    "react-dom": ">= 16.0.0"
   },
   "husky": {
     "hooks": {
@@ -36,6 +37,36 @@
   },
   "name": "nextjs-progressloader",
   "author": "Samuel Matos",
+  "description": "Next.js library to manage navigation between pages/routes with loading animation",
+  "keywords": [
+    "nextjs",
+    "progressloader",
+    "progressbar",
+    "next-progress",
+    "top-progressloader",
+    "nextjs-progressloader",
+    "next-loading",
+    "loading",
+    "Next",
+    "Next TopLoader",
+    "Next.js",
+    "Next.js 13",
+    "Nprogress",
+    "React",
+    "Top Loading Bar",
+    "Progressbar"
+  ],
+  "bugs": {
+    "url": "https://github.com/samuhmatos/nextjs-progressloader/issues"
+  },
+  "homepage": "https://www.npmjs.com/package/nextjs-progressloader#readme",
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/package/nextjs-progressloader"
+  },
+  "repository": {
+    "url": "https://github.com/samuhmatos/nextjs-progressloader",
+    "type": "git"
+  },
   "module": "dist/nextjs-progressloader.esm.js",
   "size-limit": [
     {

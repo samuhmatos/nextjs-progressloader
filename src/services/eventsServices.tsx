@@ -34,11 +34,12 @@ export function onEventEmitter(
 }
 
 export function removeEvent({ href, nickname }: LinkProps): void {
-  eventEmitter.removeAllListeners(`route-${href}`);
+  eventEmitter.removeListener(`route-${href}`, () => {});
 
   if (nickname) {
-    eventEmitter.removeAllListeners(`route-${nickname}`);
+    eventEmitter.removeListener(`route-${nickname}`, () => {});
   }
 }
 
 // TODO: CHANGE ROUTE VALIDATE IF EXIST ROUTE
+// TODO: LATTER CALL LISTENER, REMOVE (REMOVELISTENER OR ONCE EVENT (prepend once))
