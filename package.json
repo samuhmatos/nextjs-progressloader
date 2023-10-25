@@ -59,7 +59,7 @@
   "bugs": {
     "url": "https://github.com/samuhmatos/nextjs-progressloader/issues"
   },
-  "homepage": "https://www.npmjs.com/package/nextjs-progressloader#readme",
+  "homepage": "https://github.com/samuhmatos/nextjs-progressloader",
   "publishConfig": {
     "registry": "https://www.npmjs.com/package/nextjs-progressloader"
   },

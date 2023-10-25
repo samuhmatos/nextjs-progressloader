@@ -1,4 +1,5 @@
 import * as NProgress from 'nprogress';
+import { MouseEvent as ReactMouseEvent } from 'react';
 
 const progress = {
   done: () => {
@@ -45,7 +46,7 @@ function findClosestAnchor(
 }
 
 function isExternalLink(
-  event: MouseEvent,
+  event: MouseEvent | ReactMouseEvent,
   currentAnchor: HTMLAnchorElement
 ): boolean {
   if (
