@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link, LinkProps } from './Link';
+import { Link } from './Link';
 import { existEvent } from '../services/eventsServices';
-
-export interface ContainerLinkProps {
-  links: LinkProps[];
-}
+import { ContainerLinkProps } from '../types';
 
 export function ContainerLink({ links }: ContainerLinkProps) {
   return (

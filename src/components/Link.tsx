@@ -1,24 +1,20 @@
 import NextLink from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { onEventEmitter, removeEvent } from '../services/eventsServices';
-
-export interface LinkProps {
-  href: string;
-  nickname?: string;
-}
+import { eventListener } from '../services/eventsServices';
+import { LinkProps } from '../types';
 
 export function Link(linkProps: LinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   const [link, setLink] = useState<string>(linkProps.href);
-  const [target, setTarget] = useState<'_blank'>();
+  const [target, setTarget] = useState<'_blank' | undefined>();
 
   useEffect(() => {
-    onEventEmitter(linkProps, (params, event) => {
+    eventListener.on(linkProps, (event) => {
       let query = '';
 
-      if (params && params.length > 0) {
-        params?.forEach((param, index) => {
+      if (event?.params && event.params?.length > 0) {
+        event.params.forEach((param, index) => {
           var qy = `${param.query}=${param.value}`;
 
           if (index === 0) {
@@ -31,34 +27,37 @@ export function Link(linkProps: LinkProps) {
         setLink(linkProps.href + query);
       }
 
-      if (event?.ctrlKey) {
+      if (event?.event?.ctrlKey) {
         setTarget('_blank');
-      } else if (event?.shiftKey) {
+      } else if (event?.event?.shiftKey) {
         open(linkProps.href + query, '_blank');
         return;
       }
 
       setTimeout(() => {
         linkRef.current?.click();
-        removeEvent(linkProps);
       }, 1);
     });
-  }, []);
+
+    return () => {
+      eventListener.remove(linkProps);
+    };
+  }, [linkProps]);
+
+  useEffect(() => {
+    if (target === '_blank') {
+      setTimeout(() => {
+        setTarget(undefined);
+      }, 1);
+    }
+  }, [target]);
 
   return (
     <NextLink
       href={link}
       ref={linkRef}
-      style={{ display: 'block' }}
+      style={{ display: 'none' }}
       target={target}
     />
   );
 }
-
-// return () => {
-//   eventEmitter.removeAllListeners(`route-${href}`);
-
-//   if (nickname) {
-//     eventEmitter.removeAllListeners(`route-${nickname}`);
-//   }
-// };

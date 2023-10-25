@@ -1,64 +1,68 @@
 import { EventEmitter } from 'events';
-import { LinkProps } from '../components/Link';
-import { MouseEvent } from 'react';
+import { ChangeRouteProps, LinkProps } from '../types';
 export const eventEmitter = new EventEmitter();
 
 export function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
-  var existLink = links.filter(
+  var passedLink = links.filter(
     (link) => link.href === href || (nickname && link.nickname === nickname)
   );
 
-  if (existLink.length > 1) {
+  if (
+    passedLink.length > 1 ||
+    eventEmitter.listenerCount(`route-${nickname}`) > 1 ||
+    eventEmitter.listenerCount(`route-${href}`) > 1
+  ) {
     return true;
   }
 
   return false;
 }
 
-export interface QueryStringProps {
-  query: string;
-  value: string;
-}
-
 export function changeRoute(
-  name: string,
-  params?: QueryStringProps[],
-  event?: MouseEvent
+  RouteName: string,
+  params?: ChangeRouteProps
 ): void {
-  eventEmitter.emit(`route-${name}`, params, event);
+  var eventCalled = eventEmitter.emit(`route-${RouteName}`, params);
+
+  if (!eventCalled) {
+    throw new Error(
+      `The route name '${RouteName}' is not registered in the local and global Container Link!`
+    );
+  }
 }
 
-function emitEvent(
-  name: string,
-  callbackFn: (params?: QueryStringProps[], event?: MouseEvent) => void
+function listenEmittedEvent(
+  RouteName: string,
+  callbackFn: (params?: ChangeRouteProps) => void
 ) {
-  eventEmitter.on(
-    `route-${name}`,
-    (params?: QueryStringProps[], event?: MouseEvent) => {
-      callbackFn(params, event);
+  eventEmitter.addListener(
+    `route-${RouteName}`,
+    (params?: ChangeRouteProps) => {
+      callbackFn(params);
     }
   );
 }
 
-export function onEventEmitter(
+function onEventListener(
   { href, nickname }: LinkProps,
-  callbackFn: (params?: QueryStringProps[], event?: MouseEvent) => void
+  callbackFn: (params?: ChangeRouteProps) => void
 ): void {
-  emitEvent(href, callbackFn);
+  listenEmittedEvent(href, callbackFn);
 
   if (nickname) {
-    emitEvent(nickname, callbackFn);
+    listenEmittedEvent(nickname, callbackFn);
   }
 }
 
-export function removeEvent({ href, nickname }: LinkProps): void {
-  eventEmitter.removeListener(`route-${href}`, () => {});
+function removeEventListener({ href, nickname }: LinkProps): void {
+  eventEmitter.removeAllListeners(`route-${href}`);
 
   if (nickname) {
-    eventEmitter.removeListener(`route-${nickname}`, () => {});
+    eventEmitter.removeAllListeners(`route-${nickname}`);
   }
 }
 
-// TODO: CHANGE ROUTE VALIDATE IF EXIST ROUTE
-// TODO: LATTER CALL LISTENER, REMOVE (REMOVELISTENER OR ONCE EVENT (prepend once))
-//FIXME: CLICKING, THE SAME BUTTON CANT CLICK MORE (EXEMPLE: CRIAR USUARIO BUTTON IN DASHBOARD OF THE BLOG)
+export const eventListener = {
+  on: onEventListener,
+  remove: removeEventListener,
+};
