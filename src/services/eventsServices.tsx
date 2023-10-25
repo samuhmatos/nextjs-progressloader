@@ -22,27 +22,32 @@ export interface QueryStringProps {
 
 export function changeRoute(
   name: string,
-  event: MouseEvent,
-  params?: QueryStringProps[]
+  params?: QueryStringProps[],
+  event?: MouseEvent
 ): void {
-  eventEmitter.emit(`route-${name}`, event, params);
+  eventEmitter.emit(`route-${name}`, params, event);
+}
+
+function emitEvent(
+  name: string,
+  callbackFn: (params?: QueryStringProps[], event?: MouseEvent) => void
+) {
+  eventEmitter.on(
+    `route-${name}`,
+    (params?: QueryStringProps[], event?: MouseEvent) => {
+      callbackFn(params, event);
+    }
+  );
 }
 
 export function onEventEmitter(
   { href, nickname }: LinkProps,
-  callbackFn: (event: MouseEvent, params?: QueryStringProps[]) => void
+  callbackFn: (params?: QueryStringProps[], event?: MouseEvent) => void
 ): void {
-  eventEmitter.on(`route-${href}`, (event, params?: QueryStringProps[]) => {
-    callbackFn(event, params);
-  });
+  emitEvent(href, callbackFn);
 
   if (nickname) {
-    eventEmitter.on(
-      `route-${nickname}`,
-      (event, params?: QueryStringProps[]) => {
-        callbackFn(event, params);
-      }
-    );
+    emitEvent(nickname, callbackFn);
   }
 }
 
@@ -56,5 +61,4 @@ export function removeEvent({ href, nickname }: LinkProps): void {
 
 // TODO: CHANGE ROUTE VALIDATE IF EXIST ROUTE
 // TODO: LATTER CALL LISTENER, REMOVE (REMOVELISTENER OR ONCE EVENT (prepend once))
-//TODO: ADD PARAMS IN THE ROUTE LIKE QUERY STRINGS
 //FIXME: CLICKING, THE SAME BUTTON CANT CLICK MORE (EXEMPLE: CRIAR USUARIO BUTTON IN DASHBOARD OF THE BLOG)

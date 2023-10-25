@@ -14,7 +14,7 @@ export function Link(linkProps: LinkProps) {
   const [target, setTarget] = useState<'_blank'>();
 
   useEffect(() => {
-    onEventEmitter(linkProps, (event, params) => {
+    onEventEmitter(linkProps, (params, event) => {
       let query = '';
 
       if (params && params.length > 0) {
@@ -31,9 +31,9 @@ export function Link(linkProps: LinkProps) {
         setLink(linkProps.href + query);
       }
 
-      if (event.ctrlKey) {
+      if (event?.ctrlKey) {
         setTarget('_blank');
-      } else if (event.shiftKey) {
+      } else if (event?.shiftKey) {
         open(linkProps.href + query, '_blank');
         return;
       }
@@ -51,9 +51,7 @@ export function Link(linkProps: LinkProps) {
       ref={linkRef}
       style={{ display: 'block' }}
       target={target}
-    >
-      {link}
-    </NextLink>
+    />
   );
 }
 
