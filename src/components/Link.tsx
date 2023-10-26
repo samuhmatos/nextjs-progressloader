@@ -7,7 +7,6 @@ export function Link(linkProps: LinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   const [link, setLink] = useState<string>(linkProps.href);
-  const [target, setTarget] = useState<'_blank' | undefined>();
 
   useEffect(() => {
     eventListener.on(linkProps, (event) => {
@@ -27,9 +26,7 @@ export function Link(linkProps: LinkProps) {
         setLink(linkProps.href + query);
       }
 
-      if (event?.event?.ctrlKey) {
-        setTarget('_blank');
-      } else if (event?.event?.shiftKey) {
+      if (event?.open === 'newTab') {
         open(linkProps.href + query, '_blank');
         return;
       }
@@ -44,20 +41,5 @@ export function Link(linkProps: LinkProps) {
     };
   }, [linkProps]);
 
-  useEffect(() => {
-    if (target === '_blank') {
-      setTimeout(() => {
-        setTarget(undefined);
-      }, 1);
-    }
-  }, [target]);
-
-  return (
-    <NextLink
-      href={link}
-      ref={linkRef}
-      style={{ display: 'none' }}
-      target={target}
-    />
-  );
+  return <NextLink href={link} ref={linkRef} style={{ display: 'none' }} />;
 }

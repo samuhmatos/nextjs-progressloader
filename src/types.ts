@@ -1,5 +1,3 @@
-import { MouseEvent } from 'react';
-
 export interface QueryStringProps {
   query: string;
   value: string;
@@ -7,7 +5,7 @@ export interface QueryStringProps {
 
 export interface ChangeRouteProps {
   params?: QueryStringProps[];
-  event?: MouseEvent;
+  open?: 'newTab' | 'currentTab';
 }
 
 export interface LinkProps {
@@ -26,8 +24,8 @@ export type ProgressLoaderProps = {
    */
   color?: string;
   /**
-   * The initial position for the TopLoader in percentage, 0.08 is 8%.
-   * @default 0.08
+   * The initial position for the TopLoader in percentage, 0.1 is 10%.
+   * @default 0.1
    */
   initialPosition?: number;
   /**

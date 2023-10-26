@@ -48,7 +48,12 @@ export const ProgressLoader = ({
       speed: speed ?? 200,
       template:
         template ??
-        '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>',
+        `<div class="bar" role="bar">
+          <div class="peg"></div>
+        </div>
+        <div class="spinner" role="spinner">
+          <div class="spinner-icon"></div>
+        </div>`,
     });
   });
 

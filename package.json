@@ -1,5 +1,5 @@
 {
-  "version": "0.1.8",
+  "version": "0.1.9",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -60,9 +60,6 @@
     "url": "https://github.com/samuhmatos/nextjs-progressloader/issues"
   },
   "homepage": "https://github.com/samuhmatos/nextjs-progressloader",
-  "publishConfig": {
-    "registry": "https://www.npmjs.com/package/nextjs-progressloader"
-  },
   "repository": {
     "url": "https://github.com/samuhmatos/nextjs-progressloader",
     "type": "git"
