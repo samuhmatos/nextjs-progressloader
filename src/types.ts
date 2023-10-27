@@ -1,11 +1,17 @@
 export interface QueryStringProps {
-  query: string;
-  value: string;
+  key: string;
+  value: string | number;
+}
+
+export interface DynamicRoute {
+  key: string;
+  value: string | number;
 }
 
 export interface ChangeRouteProps {
-  params?: QueryStringProps[];
+  queryStrings?: QueryStringProps[];
   open?: 'newTab' | 'currentTab';
+  dynamicRoute?: DynamicRoute[];
 }
 
 export interface LinkProps {

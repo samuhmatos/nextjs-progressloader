@@ -1,7 +1,8 @@
 import NextLink from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { eventListener } from '../services/eventsServices';
+import { eventsService } from '../services/eventsServices';
 import { LinkProps } from '../types';
+import { routeService } from '../services/routeService';
 
 export function Link(linkProps: LinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -9,25 +10,26 @@ export function Link(linkProps: LinkProps) {
   const [link, setLink] = useState<string>(linkProps.href);
 
   useEffect(() => {
-    eventListener.on(linkProps, (event) => {
-      let query = '';
+    eventsService.eventListener.on(linkProps, (event) => {
+      var newLink = linkProps.href;
 
-      if (event?.params && event.params?.length > 0) {
-        event.params.forEach((param, index) => {
-          var qy = `${param.query}=${param.value}`;
+      if (routeService.matchDynamicRoute(linkProps.href, event?.dynamicRoute)) {
+        newLink = routeService.replaceDynamicValues(
+          linkProps.href,
+          event?.dynamicRoute
+        );
+      }
 
-          if (index === 0) {
-            query = '?' + qy;
-          } else {
-            query += '&&' + qy;
-          }
-        });
+      if (event?.queryStrings && event.queryStrings.length > 0) {
+        newLink += routeService.generateQueryString(event.queryStrings);
+      }
 
-        setLink(linkProps.href + query);
+      if (newLink !== link) {
+        setLink(newLink);
       }
 
       if (event?.open === 'newTab') {
-        open(linkProps.href + query, '_blank');
+        open(newLink, '_blank');
         return;
       }
 
@@ -37,7 +39,7 @@ export function Link(linkProps: LinkProps) {
     });
 
     return () => {
-      eventListener.remove(linkProps);
+      eventsService.eventListener.remove(linkProps);
     };
   }, [linkProps]);
 

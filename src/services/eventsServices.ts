@@ -2,13 +2,54 @@ import { EventEmitter } from 'events';
 import { ChangeRouteProps, LinkProps } from '../types';
 export const eventEmitter = new EventEmitter();
 
-export function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
+function comparePassedLinks(
+  links: LinkProps[],
+  { href, nickname }: LinkProps
+): boolean {
   var passedLink = links.filter(
-    (link) => link.href === href || (nickname && link.nickname === nickname)
+    (link) =>
+      link.href === href ||
+      link.href + '/' === href ||
+      (nickname && link.nickname === nickname)
   );
 
+  var existEqualLinks: boolean = false;
+
+  for (let index = 0; index < passedLink.length; index++) {
+    let actualLink = passedLink[index];
+    let nextLink = passedLink[index + 1];
+
+    if (nextLink) {
+      if (
+        actualLink.href === nextLink.href ||
+        actualLink.nickname === nextLink.nickname
+      ) {
+        existEqualLinks = true;
+        break;
+      } else {
+        if (
+          actualLink.href[actualLink.href.length - 1] !== '/' &&
+          actualLink.href + '/' === nextLink.href
+        ) {
+          existEqualLinks = true;
+          break;
+        }
+
+        existEqualLinks = false;
+      }
+    } else {
+      existEqualLinks = false;
+    }
+  }
+
+  return existEqualLinks;
+}
+
+function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
+  var existEqualLinks = comparePassedLinks(links, { href, nickname });
+
   if (
-    passedLink.length > 1 ||
+    existEqualLinks === true ||
     eventEmitter.listenerCount(`route-${nickname}`) > 1 ||
     eventEmitter.listenerCount(`route-${href}`) > 1
   ) {
@@ -62,7 +103,12 @@ function removeEventListener({ href, nickname }: LinkProps): void {
   }
 }
 
-export const eventListener = {
+const eventListener = {
   on: onEventListener,
   remove: removeEventListener,
+};
+
+export const eventsService = {
+  existEvent,
+  eventListener,
 };
