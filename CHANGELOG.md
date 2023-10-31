@@ -38,3 +38,9 @@
 
 - Validating the url if is valide for using.
 - The `params` key passed in `changeRoute()` now has the name `queryStrings`
+
+## v0.2.1
+
+### Fixed
+
+- Fixed the queryString bug when a route didn't have a dynamic route.

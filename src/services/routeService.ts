@@ -91,6 +91,10 @@ function matchDynamicRoute(
 
   const dynamicKeysSet = new Set(dynamicKeys);
 
+  if (!routeDynamicKeys.length && typeof dynamicValues === 'undefined') {
+    return true;
+  }
+
   if (routeDynamicKeys.length !== dynamicValues?.length) {
     throw new Error(
       'The number of dynamic keys in the route does not match the number of dynamic values specified.'
