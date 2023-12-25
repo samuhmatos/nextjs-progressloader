@@ -44,3 +44,13 @@
 ### Fixed
 
 - Fixed the queryString bug when a route didn't have a dynamic route.
+
+## v1.0.0
+
+### Added
+
+- Added the new and upgraded useRouter() hook. It is possible using all the useRouter() native features with animation (push, replace, back)
+
+### Updated
+
+- changeRoute() function is deprecated, use the new useRouter() hook

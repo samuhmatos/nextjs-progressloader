@@ -2,8 +2,9 @@
 
 import React, { useEffect } from 'react';
 import * as NProgress from 'nprogress';
-import { handleClick } from '../services/progressService';
+import { handleClick, progress } from '../services/progressService';
 import { ProgressLoaderProps } from '../types';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export const ProgressLoader = ({
   color: propColor,
@@ -18,6 +19,9 @@ export const ProgressLoader = ({
   template,
   zIndex = 1600,
 }: ProgressLoaderProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const defaultColor = '#29d';
   const defaultHeight = 3;
 
@@ -55,7 +59,7 @@ export const ProgressLoader = ({
           <div class="spinner-icon"></div>
         </div>`,
     });
-  });
+  }, []);
 
   useEffect(() => {
     // Add the global click event listener
@@ -65,7 +69,11 @@ export const ProgressLoader = ({
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    progress.done();
+  }, [pathname, searchParams]);
 
   return styles;
 };

@@ -59,6 +59,9 @@ function existEvent(links: LinkProps[], { href, nickname }: LinkProps) {
   return false;
 }
 
+/**
+ * @deprecated Instead use the new useRouter() hook
+ */
 export function changeRoute(
   RouteName: string,
   params?: ChangeRouteProps

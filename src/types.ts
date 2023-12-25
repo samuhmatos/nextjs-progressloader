@@ -1,3 +1,5 @@
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+
 export interface QueryStringProps {
   key: string;
   value: string | number;
@@ -84,3 +86,17 @@ export type ProgressLoaderProps = {
    */
   zIndex?: number;
 };
+
+export interface UseRouterTypes
+  extends Omit<AppRouterInstance, 'push' | 'replace'> {
+  /**
+   * Navigate to the provided href.
+   * Pushes a new history entry.
+   */
+  push: (routeName: string, params?: ChangeRouteProps) => void;
+  /**
+   * Navigate to the provided href.
+   * Replaces the current history entry.
+   */
+  replace: (routeName: string, params?: ChangeRouteProps) => void;
+}

@@ -1,27 +1,22 @@
 # Next Js Progress Loader
 
 - [A next Js Loading Bar component made using Nprogress. Works with Next.js 13 and whatever another version.](#install)
-- [Advanced feature: Navigate between routes with loading animation instead using useRouter()](#advanced-usage)
+- [Advanced feature: Navigate between routes with loading animation using our custom useRouter()](#advanced-usage)
+- [Check the changelog](CHANGELOG.md)
 
-Important context: Latter the Next.Js 13 update, router events has ben depreciated and still there's no 'next native ressource' to manipulate router events as before. But this lib was build to solve this problem and bring a new way to make the UX better!
+Important context: Latter the Next.Js 13 update, router events has ben depreciated and still there's no 'next native resource' to manipulate router events as before. But this lib was build to solve this problem and bring a new way to make the UX/UI better!
 
 ## Install
 
-using npm:
-
 ```bash
 npm install nextjs-progressloader
-```
 
-using yarn:
-
-```bash
 yarn add nextjs-progressloader
 ```
 
 ## Basic Usage
 
-import the animation component:
+Import the animation component:
 
 ```js
 import { ProgressLoader } from 'nextjs-progressloader';
@@ -51,24 +46,24 @@ export default function RootLayout({ children }) {
 
 ## Advanced Usage
 
-If you would like to render some route with the Load Animation, use `<ContainerLink />` component and `changeRoute()` function to do it:
+If you would like to render some route with the Load Animation, use `<ContainerLink />` component and our custom `useRouter()` hook to do it:
 
 When render `<ContainerLink />` you are required to pass a `links` prop which is responsible to create all the needed events to work.
 
-And when using `changeRoute()` a event will be emitted based on the function's param.
+And when using `useRouter()` a event will be emitted based on the function's param.
 
 - **Important and required**: To this feature work correctly, the `links` prop and the function's parameter must be equals.
-- You can render the component as many times as you want and anywhere you want, being inside the `<body></body>`
-- Using the `<ContainerLink />` next will identify the routes and will pre-render: verify the doc https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching
+- You can render the component how many times you want and anywhere you want, being inside the `<body></body>`
+- Using the `<ContainerLink />` next will identify the routes and will pre-render: verify the [documentation](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#1-prefetching)
 
-Once the links are defined, you can call the route wherever and whenever you want! You may call using the nickname or href.
+Once the links are defined, you can invoke the route wherever and whenever you want using the nickname or href.
 
 ##### [Learn everything about the Usability flow](docs/Usability%20flow.md)
 
 ### Example usage
 
 ```jsx
-import { changeRoute, ContainerLink, ContainerLinkProps } from 'nextjs-progressloader';
+import { useRouter, ContainerLink, ContainerLinkProps } from 'nextjs-progressloader';
 
 const links: ContainerLinkProps["links"] = [
   {
@@ -85,6 +80,7 @@ const links: ContainerLinkProps["links"] = [
 ];
 
 export function ComponentIWantToRender(){
+  const router = useRouter()
 
   function validateSomeThing(){
     // your validation
@@ -92,10 +88,10 @@ export function ComponentIWantToRender(){
     //Example
     if(userLogged){
       // calling by the nickname
-      changeRoute("home")
+      router.push("home")
     }else{
       //calling by the route
-      changeRoute("/login")
+      router.push("/login")
     }
   }
 
@@ -112,3 +108,9 @@ export function ComponentIWantToRender(){
 ```
 
 ##### [Learn everything about the Usability flow](docs/Usability%20flow.md)
+
+## Issues
+
+##### [Do you have any suggestions or issue? You can tell us](https://github.com/samuhmatos/nextjs-progressloader/issues)
+
+##### [Check the changelog](CHANGELOG.md)

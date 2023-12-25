@@ -1,7 +1,7 @@
 import * as NProgress from 'nprogress';
 import { MouseEvent as ReactMouseEvent } from 'react';
 
-const progress = {
+export const progress = {
   done: () => {
     var npgclass = document.querySelectorAll('html');
 

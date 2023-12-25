@@ -2,17 +2,19 @@
 
 ### All the possible usages
 
-In the examples bellow, you will see all the possibles ways to generate links (using the rules) and call them.
+In the examples bellow, you will see all the possibles ways to generate links (using the rules) and invoke them.
 
-Using the `<ContainerLink />` with `changeRoute()` you can:
+Using the `<ContainerLink />` with our custom `useRouter()` hook you can:
 
 - Use dynamic routes
 - Use Query strings
 - Open in a new tab or in a new window
 
+With our custom useRouter() you can use all the next's useRouter feature with loading animation.
+
 ```tsx
 import {
-  changeRoute,
+  useRouter,
   ContainerLink,
   ContainerLinkProps,
 } from 'nextjs-progressloader';
@@ -32,10 +34,12 @@ const links: ContainerLinkProps['links'] = [
 ];
 
 export function ComponentIWantToRender() {
+  const router = useRouter();
+
   // calling route with dynamic values
   function callWithDynamicRoute() {
     // calling the nickname
-    changeRoute('posts.details', {
+    router.push('posts.details', {
       dynamicRoute: [{ key: 'slug', value: 'post-title' }],
     });
 
@@ -45,7 +49,7 @@ export function ComponentIWantToRender() {
   // calling route with query string
   function callWithQueryStrings() {
     // calling the nickname
-    changeRoute('posts', {
+    router.push('posts', {
       queryStrings: [{ key: 'page', value: '1' }],
     });
     // /posts?page=1
@@ -54,7 +58,7 @@ export function ComponentIWantToRender() {
   // calling route and opening in a new tab/ browser window
   function callOpeningInNewTab() {
     // calling the href
-    changeRoute('/profile', {
+    router.push('/profile', {
       open: 'newTab',
     });
   }
@@ -62,13 +66,22 @@ export function ComponentIWantToRender() {
   function usingAllTheResources() {
     // calling the nickname
 
-    changeRoute('posts.details', {
+    router.push('posts.details', {
       open: 'newTab',
       dynamicRoute: [{ key: 'slug', value: 'post-title' }],
       queryStrings: [{ key: 'page', value: '1' }],
     });
 
     // /posts/post-title?page=1 IN  (A NEW TAB)
+  }
+
+  function usingBackOrReplace(){
+
+    if(/*some validation */){
+      router.replace('profile')
+    }else{
+      router.back()
+    }
   }
 
   return (
@@ -102,9 +115,9 @@ When creating the component, developers must adhere to the following rules:
     - Allowed: The 'nickname' route can only contain uppercase and lowercase letters, numbers, and the following special characters: ( !, @, #, $, %, &, -, \_, and ?. ).
     - Disallowed: Any other character not listed above will result in an error.
 
-### Rules for call `changeRoute()`
+### Rules for invoking a route
 
-When invoking the `changeRoute()` function, developers must adhere to the following rules:
+When invoking the route, developers must adhere to the following rules:
 
 - **DynamicRoute**:
   - if the **href** route was created with dynamic segments,you are obligated to provide the corresponding dynamic values.
