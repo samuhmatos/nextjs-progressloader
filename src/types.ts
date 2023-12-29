@@ -87,8 +87,7 @@ export type ProgressLoaderProps = {
   zIndex?: number;
 };
 
-export interface UseRouterTypes
-  extends Omit<AppRouterInstance, 'push' | 'replace'> {
+export interface UseRouterTypes extends Pick<AppRouterInstance, 'prefetch'> {
   /**
    * Navigate to the provided href.
    * Pushes a new history entry.
@@ -99,4 +98,17 @@ export interface UseRouterTypes
    * Replaces the current history entry.
    */
   replace: (routeName: string, params?: ChangeRouteProps) => void;
+
+  /**
+   * Navigate to the previous history entry.
+   */
+  back(): void;
+  /**
+   * Navigate to the next history entry.
+   */
+  forward(): void;
+  /**
+   * Refresh the current page.
+   */
+  refresh(): void;
 }
