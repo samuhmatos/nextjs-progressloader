@@ -1,5 +1,22 @@
 # Changelogs
 
+## v1.2.0
+
+### Updated
+
+- Now ContainerLink has support to register a external link like (https://github.com/samuhmatos)
+  don't forget to check out the [rules](docs/Usability%20flow.md)
+
+## v1.0.0
+
+### Added
+
+- Added the new and upgraded useRouter() hook. It is possible using all the useRouter() native features with animation (push, replace, back)
+
+### Updated
+
+- changeRoute() function is deprecated, use the new useRouter() hook
+
 ## v0.1.8
 
 ### Added
@@ -10,11 +27,11 @@
 
 - Fixed the event wasn't removed on change route bug
 
-## v0.1.9
+## v0.2.1
 
-### Added
+### Fixed
 
-- Added the ability to open link in a new Tab using then `changeRoute()`
+- Fixed the queryString bug when a route didn't have a dynamic route.
 
 ## v0.2.0
 
@@ -39,18 +56,8 @@
 - Validating the url if is valide for using.
 - The `params` key passed in `changeRoute()` now has the name `queryStrings`
 
-## v0.2.1
-
-### Fixed
-
-- Fixed the queryString bug when a route didn't have a dynamic route.
-
-## v1.0.0
+## v0.1.9
 
 ### Added
 
-- Added the new and upgraded useRouter() hook. It is possible using all the useRouter() native features with animation (push, replace, back)
-
-### Updated
-
-- changeRoute() function is deprecated, use the new useRouter() hook
+- Added the ability to open link in a new Tab using then `changeRoute()`

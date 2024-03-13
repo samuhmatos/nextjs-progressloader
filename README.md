@@ -111,6 +111,6 @@ export function ComponentIWantToRender(){
 
 ## Issues
 
-##### [Do you have any suggestions or issue? You can tell us](https://github.com/samuhmatos/nextjs-progressloader/issues)
+##### [Do you have any suggestions or issue? Please let me know](https://github.com/samuhmatos/nextjs-progressloader/issues)
 
 ##### [Check the changelog](CHANGELOG.md)

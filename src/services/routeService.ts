@@ -24,7 +24,7 @@ function validateRoute(
     }
 
     throw new Error(
-      `Invalid route: The route '${route}' can only contain letters, numbers, hyphens (-), underscores (_), slashes (/), and braces ({}).`
+      `Invalid route: The route '${route}' can only contain letters, numbers, hyphens (-), underscores (_), slashes (/), dots (.), colons (:),  and curly braces ({}).`
     );
   }
 }
@@ -34,11 +34,7 @@ function isAValidHrefRoute(route: string) {
     return true;
   }
 
-  if (route[0] !== '/') {
-    throw new Error(`Invalid route: The '${route}' route must begin with '/'`);
-  }
-
-  const regex = /^\/(([a-zA-Z0-9-_]+|\{[a-zA-Z0-9-_,]+\})\/?)+$/;
+  const regex = /^(([a-zA-Z0-9-_.\/:]+|\{[a-zA-Z0-9-_.]+\})\/?)+$/;
 
   return validateRoute(route, regex, 'href');
 }

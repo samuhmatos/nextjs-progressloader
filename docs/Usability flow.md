@@ -109,10 +109,10 @@ When creating the component, developers must adhere to the following rules:
 - Validating if already exist the passed href or nickname. The validation will be made in every available containers in your project being global or local.
 - Validating if the passed nickname and href follow the needed rules.
   - **href**:
-    - Allowed: The 'href' route must start with a '/' and may contain letters, numbers, hyphens -, underscores \_, slashes /, and curly braces {} used to delimit parameters.
+    - Allowed: The 'href' route may contain letters, numbers, hyphens -, underscores \_, slashes /, dots (.), colons (:), and curly braces {} used to delimit parameters.
     - Disallowed: Any character not listed above is prohibited in the 'href' route. Additionally, curly braces {} must be used in balanced pairs (open and close) and cannot be unbalanced. If a route contains unbalanced curly braces {} or other disallowed characters, it will result in an error.
   - **nickname**:
-    - Allowed: The 'nickname' route can only contain uppercase and lowercase letters, numbers, and the following special characters: ( !, @, #, $, %, &, -, \_, and ?. ).
+    - Allowed: The 'nickname' route can only contain uppercase and lowercase letters, numbers, and the following special characters: ( `!`, `@`, `#`, `$`, `%`, `&`, `-`, \_, `.` , `?` ).
     - Disallowed: Any other character not listed above will result in an error.
 
 ### Rules for invoking a route
@@ -121,6 +121,6 @@ When invoking the route, developers must adhere to the following rules:
 
 - **DynamicRoute**:
   - if the **href** route was created with dynamic segments,you are obligated to provide the corresponding dynamic values.
-  - The **values** supplied to the function may only include: letters, numbers, underscores (\_), and hyphens (-). Spaces and other characters are not permitted.
+  - The **values** supplied to the function may only include: letters, numbers, underscores (\_), dots (.) and hyphens (-). Spaces and other characters are not allowed.
   - The number of dynamic keys/values passed in the function must match the number of dynamic values specified in the route.
   - The dynamic keys provided in the called function must correspond to the dynamic values specified in the route.
