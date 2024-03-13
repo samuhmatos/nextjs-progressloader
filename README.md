@@ -6,6 +6,8 @@
 
 Important context: Latter the Next.Js 13 update, router events has ben depreciated and still there's no 'next native resource' to manipulate router events as before. But this lib was build to solve this problem and bring a new way to make the UX/UI better!
 
+[![Downloads](https://img.shields.io/npm/dt/nextjs-progressloader.svg)](https://www.npmjs.com/package/nextjs-progressloader) [![GitHub stars](https://img.shields.io/github/stars/samuhmatos/nextjs-progressloader.svg?style=social)](https://github.com/samuhmatos/nextjs-progressloader)
+
 ## Install
 
 ```bash
