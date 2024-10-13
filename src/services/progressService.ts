@@ -53,6 +53,7 @@ function isExternalLink(
     event.altKey ||
     event.ctrlKey ||
     event.shiftKey ||
+    event.metaKey ||
     currentAnchor.target === '_blank'
   )
     return true;
