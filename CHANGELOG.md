@@ -1,5 +1,12 @@
 # Changelogs
 
+## v1.3.0
+
+### Added
+
+- Added Mac support with metakey
+- Added ProgressLoader inside Suspense's React component
+
 ## v1.2.0
 
 ### Updated

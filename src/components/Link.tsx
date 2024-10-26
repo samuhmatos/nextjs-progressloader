@@ -6,7 +6,6 @@ import { routeService } from '../services/routeService';
 
 export function Link(linkProps: LinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
-
   const [link, setLink] = useState<string>(linkProps.href);
 
   useEffect(() => {

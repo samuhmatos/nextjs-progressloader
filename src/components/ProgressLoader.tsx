@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import * as NProgress from 'nprogress';
 import { handleClick, progress } from '../services/progressService';
 import { ProgressLoaderProps } from '../types';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-export const ProgressLoader = ({
+const ProgressLoaderTemplate = ({
   color: propColor,
   height: propHeight,
   showSpinner,
@@ -77,3 +77,11 @@ export const ProgressLoader = ({
 
   return styles;
 };
+
+export function ProgressLoader({ ...props }: ProgressLoaderProps) {
+  return (
+    <Suspense>
+      <ProgressLoaderTemplate {...props} />
+    </Suspense>
+  );
+}
