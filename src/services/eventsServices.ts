@@ -66,7 +66,7 @@ export function changeRoute(
   RouteName: string,
   params?: ChangeRouteProps
 ): void {
-  var eventCalled = eventEmitter.emit(`route-${RouteName}`, params);
+  var eventCalled = eventEmitter.emit(`route-${RouteName}`, params, []);
 
   if (!eventCalled) {
     throw new Error(
